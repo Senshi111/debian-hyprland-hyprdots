@@ -88,7 +88,8 @@ install_packages \
         libgtk-3-dev \
         libpipewire-0.3-dev \
         libinih-dev \
-        scdoc
+        scdoc \
+        libpam0g-dev
 
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
@@ -171,6 +172,15 @@ git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git
 cd pokemon-colorscripts
 sudo ./install.sh
 cd ..
-# Clean up
 
+
+# Clone and install Swaylick-effects
+git clone https://github.com/mortie/swaylock-effects.git
+cd swaylock-effects
+meson build
+ninja -C build
+sudo ninja -C build install
+cd ..
+
+# Clean up
 rm -rf Hyprland swww xdg-desktop-portal-hyprland swappy wl-clipboard pokemon-colorscripts
