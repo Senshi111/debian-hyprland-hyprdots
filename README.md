@@ -2,12 +2,12 @@
 
 
 <p align="center">
-  <img width="250" src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/hyprdots_arch.png">
+  <img width="250" src="https://github-production-user-asset-6210df.s3.amazonaws.com/40372242/263763138-8254e6be-9537-4388-90f8-c418124c8284.png">
 </p>
     
 
 
-## My Arch Hyprland Config
+## My Debian Sid Hyprland Config
 
 https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23-9aa2-b1edb6cabe99.mp4
 
@@ -21,16 +21,19 @@ https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23
 
 > **Warning**
 >
-> Install script will auto-detect nvidia card and install nvidia-dkms drivers for your kernel.   
-> Nvidia drm will be enabled only in grub and Hyperland is launched by sddm!!   
-> So please ensure that hyprland supports your nvidia card.   
+> When you installing rustup, select nightly version othervise you wont be able to build pacakge   
+   
 
-After minimal Arch install (with grub), clone and execute -
+After minimal (or any other) Debian install (with grub), clone and execute -
 ```shell
-pacman -Sy git
-git clone https://github.com/prasanthrangan/hyprdots ~/Hyprdots
-cd ~/Hyprdots/Scripts
+sudo apt install git
+git clone https://github.com/Senshi111/debian-hyprland-hyprdots.git
+cd ~/debian-hyprland-hyprdots/build-hyprland
+./install-hyprland-with-all-apps-for-theming.sh
+
+cd ~/debian-hyprland-hyprdots/Theme/Scripts
 ./install.sh
+
 ```
 
 > **Note**
@@ -115,14 +118,6 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
 <details>
 <summary><h4>Packages</h4></summary>
 
-| nvidia | |
-| :-- | --- |
-linux-headers | for main kernel (script will auto detect from /usr/lib/modules/)
-linux-zen-headers | for zen kernel (script will auto detect from /usr/lib/modules/)
-linux-lts-headers | for lts kernel (script will auto detect from /usr/lib/modules/)
-nvidia-dkms | nvidia drivers (script will auto detect from lspci -k | grep -A 2 -E "(VGA|3D)")
-nvidia-utils | nvidia drivers (script will auto detect from lspci -k | grep -A 2 -E "(VGA|3D)")
-
 | tools | |
 | :-- | --- |
 pipewire | audio and video server
@@ -130,12 +125,10 @@ pipewire-alsa | for audio
 pipewire-audio | for audio
 pipewire-jack | for audio
 pipewire-pulse | for audio
-gst-plugin-pipewire | for audio
 wireplumber | audio and video server
-networkmanager | network manager
-network-manager-applet | nm tray
+network-manager | network manager
+network-manager-gnome | nm tray
 bluez | for bluetooth
-bluez-utils | for bluetooth
 blueman | bt tray
 brightnessctl | brightness control for laptop
 
@@ -144,18 +137,14 @@ brightnessctl | brightness control for laptop
 sddm-git | display manager for login
 qt5-wayland | for QT wayland XDP
 qt6-wayland | for QT wayland XDP
-qt5-quickcontrols | for sddm theme
-qt5-quickcontrols2 | for sddm theme
-qt5-graphicaleffects | for sddm theme
 
 | hypr | |
 | :-- | --- |
-hyprland-git | main window manager (script will change this to hyprland-nvidia-git if nvidia card is detected)
+hyprland-git | main window manager 
 dunst | graphical notification daemon
-rofi-lbonn-wayland-git | app launcher
-waybar-hyprland-git | status bar
+rofi-lbonn-wayland | app launcher
+waybar | status bar
 swww | wallpaper app
-swaylock-effects-git | lockscreen
 swayidle | idle management daemon
 wlogout | logout screen
 grim | screenshot tool
@@ -185,7 +174,7 @@ firefox | browser
 kitty | terminal
 neofetch | fetch tool
 dolphin | kde file manager
-visual-studio-code-bin | gui code editor
+visual-studio-code | gui code editor
 vim | text editor
 ark | kde file archiver
 
@@ -194,9 +183,6 @@ ark | kde file archiver
 zsh | main shell
 exa | colorful file lister
 oh-my-zsh-git | for zsh plugins
-zsh-theme-powerlevel10k-git | theme for zsh
-zsh-syntax-highlighting-git | highlighting of commands
-zsh-autosuggestions-git | see completion as you type
 pokemon-colorscripts-git | display pokemon sprites
 
 </details>
