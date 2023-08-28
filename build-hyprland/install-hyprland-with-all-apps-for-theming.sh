@@ -89,7 +89,8 @@ install_packages \
         libpipewire-0.3-dev \
         libinih-dev \
         scdoc \
-        libpam0g-dev
+        libpam0g-dev \
+        golang
 
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
