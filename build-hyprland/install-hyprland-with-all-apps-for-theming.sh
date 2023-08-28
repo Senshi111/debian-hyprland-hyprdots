@@ -1,7 +1,15 @@
+#!/bin/bash
 
-# log "Installing packages dep"
-sudo apt-get install -y \
-		build-essential \
+# Function to install packages
+install_packages() {
+    sudo apt-get install -y "$@"
+}
+
+# Add repositories and update system here if needed
+
+# Install required packages
+install_packages \
+        build-essential \
 		git \
 		ninja-build \
 		meson \
@@ -82,91 +90,87 @@ sudo apt-get install -y \
         libinih-dev \
         scdoc
 
-
-
-
-
-
-
+# Install dependencies for wlroots
 sudo apt-get build-dep wlroots
 
-
-
-
-
+# Clone and build Hyprland
 git clone --recursive https://github.com/hyprwm/Hyprland
 cd Hyprland
 meson build
 ninja -C build
 sudo ninja -C build install
-
 cd ..
 
+# Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source "$HOME/.cargo/env"
 
-
-
+# Clone and build swww
 git clone https://github.com/Horus645/swww.git
 cd swww
+
+# Build swww
 cargo build --release
-sudo cp /target/release/swww /usr/bin/swww
-sudo cp /target/release/swww-daemon /usr/bin/swww-daemon
-sudo cp /completions/swww.bash /usr/share/bash-completion/completions/swww
-#sudo cp /completions/swww.fish /usr/share/fish/vendor_completions.d/swww.fish
-sudo cp /completions/_swww /usr/share/zsh/site-functions/_swww
+
+# Copy binaries to /usr/bin/
+sudo cp target/release/swww /usr/bin/
+sudo cp target/release/swww-daemon /usr/bin/
+
+# Copy bash completions
+sudo cp completions/swww.bash /usr/share/bash-completion/completions/swww
+
+# Uncomment this section if needed
+# Copy fish completions
+#sudo mkdir -p /usr/share/fish/vendor_completions.d/
+#sudo cp completions/swww.fish /usr/share/fish/vendor_completions.d/swww.fish
+
+# Copy zsh completions
+sudo cp completions/_swww /usr/share/zsh/site-functions/_swww
+
+# Return to the previous directory
 cd ..
 
+
+# Clone and build xdg-desktop-portal-hyprland
 git clone https://github.com/hyprwm/xdg-desktop-portal-hyprland.git
 cd xdg-desktop-portal-hyprland
 meson build --prefix=/usr
 ninja -C build
+# Build hyprland-share-picker
 cd hyprland-share-picker && make all && cd ..
-
 ninja -C build install
-sudo cp ./hyprland-share-picker/build/hyprland-share-picker /usr/bin
-
-
+sudo cp hyprland-share-picker/build/hyprland-share-picker /usr/bin/
 cd ..
 
-
-#swappy
+# Clone and build swappy
 git clone https://github.com/jtheoof/swappy.git
 cd swappy
 meson setup build
 ninja -C build
 ninja -C build install
-
 cd ..
 
-
-# wl-clipboard
+# Clone and build wl-clipboard
 git clone https://github.com/bugaevc/wl-clipboard.git
 cd wl-clipboard
-
-# Build:
+# Build and install
 meson setup build
 cd build
 ninja
-
-# Install
 sudo meson install
-
-
 cd ..
 
-#go
-
+# Install Go
 wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo su
-sudo  rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
-exit
+sudo tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 go install go.senan.xyz/cliphist@latest
 
-
-cd ..
-
+# Clone and install pokemon-colorscripts
 git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git
 cd pokemon-colorscripts
 sudo ./install.sh
+cd ..
+# Clean up
 
+rm -rf Hyprland swww xdg-desktop-portal-hyprland swappy wl-clipboard pokemon-colorscripts
