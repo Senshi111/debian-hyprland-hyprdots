@@ -17,7 +17,6 @@
 
 
 ## My Debian Sid Hyprland Config
-https://github-production-user-asset-6210df.s3.amazonaws.com/40372242/263836193-8a80c3cf-050d-469d-aa03-7af7b07a771d.mp4
 https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23-9aa2-b1edb6cabe99.mp4
 
 | <!-- --> | <!-- --> |
