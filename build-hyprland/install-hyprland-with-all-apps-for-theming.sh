@@ -100,7 +100,7 @@ meson build
 ninja -C build
 sudo ninja -C build install
 
-cd
+cd ..
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -109,8 +109,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 git clone https://github.com/Horus645/swww.git
 cd swww
 cargo build --release
-
-cd
+sudo cp /target/release/swww /usr/bin/swww
+sudo cp /target/release/swww-daemon /usr/bin/swww-daemon
+sudo cp /completions/swww.bash /usr/share/bash-completion/completions/swww
+#sudo cp /completions/swww.fish /usr/share/fish/vendor_completions.d/swww.fish
+sudo cp /completions/_swww /usr/share/zsh/site-functions/_swww
+cd ..
 
 git clone https://github.com/hyprwm/xdg-desktop-portal-hyprland.git
 cd xdg-desktop-portal-hyprland
@@ -122,7 +126,7 @@ ninja -C build install
 sudo cp ./hyprland-share-picker/build/hyprland-share-picker /usr/bin
 
 
-cd
+cd ..
 
 
 #swappy
@@ -132,7 +136,7 @@ meson setup build
 ninja -C build
 ninja -C build install
 
-cd
+cd ..
 
 
 # wl-clipboard
@@ -148,7 +152,7 @@ ninja
 sudo meson install
 
 
-
+cd ..
 
 #go
 
@@ -160,7 +164,7 @@ export PATH=$PATH:/usr/local/go/bin
 go install go.senan.xyz/cliphist@latest
 
 
-
+cd ..
 
 git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git
 cd pokemon-colorscripts
