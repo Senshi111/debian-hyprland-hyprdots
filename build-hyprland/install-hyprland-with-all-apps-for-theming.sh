@@ -183,4 +183,4 @@ sudo ninja -C build install
 cd ..
 
 # Clean up
-rm -rf Hyprland swww xdg-desktop-portal-hyprland swappy wl-clipboard pokemon-colorscripts
+rm -rf Hyprland swww xdg-desktop-portal-hyprland swappy wl-clipboard pokemon-colorscripts swaylock-effects
