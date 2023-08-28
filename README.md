@@ -1,3 +1,12 @@
+# All the thems i took from prasanthrangan
+> **Note**
+>
+> thanks to prasanthrangan's work, I only took his themes and modified the scripts so that they could work in debian
+>[prasanthrangan github page](https://github.com/prasanthrangan/hyprdots) 
+
+
+
+
 # --// Hyprdots //--
 
 
@@ -21,7 +30,8 @@ https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23
 
 > **Warning**
 >
-> When you installing rustup, select nightly version othervise you wont be able to build pacakge   
+> When you installing rustup, select nightly version othervise you wont be able to build pacakge
+> Also if you have nvidia gpu, go to Hyprland nvidia page and aplay sugestions For more details, please refer [Hyprland Nvidia](https://wiki.hyprland.org/Nvidia/) 
    
 
 After minimal (or any other) Debian install (with grub), clone and execute -
