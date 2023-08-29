@@ -91,7 +91,8 @@ install_packages \
         scdoc \
         libpam0g-dev \
         golang \
-        waybar
+        waybar \
+	curl
 
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
