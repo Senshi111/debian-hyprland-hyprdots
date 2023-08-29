@@ -90,7 +90,8 @@ install_packages \
         libinih-dev \
         scdoc \
         libpam0g-dev \
-        golang
+        golang \
+        waybar
 
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots

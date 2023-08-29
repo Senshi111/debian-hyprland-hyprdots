@@ -11,5 +11,5 @@
 # ./install_go.sh # If needed 
 ./install_swaylock_effects.sh
 ./install_nwg-look.sh
-./install_pokemon_colorscripts.sh
+./install_pokemon-colorscripts.sh
 ./cleanup.sh
