@@ -37,8 +37,8 @@ After minimal (or any other) Debian install (with grub), clone and execute -
 ```shell
 sudo apt install git
 git clone https://github.com/Senshi111/debian-hyprland-hyprdots.git
-cd ~/debian-hyprland-hyprdots/build-hyprland
-./install-hyprland-with-all-apps-for-theming.sh
+cd ~/debian-hyprland-hyprdots/build-hyprland-and-apps
+./install-all.sh
 
 cd ~/debian-hyprland-hyprdots/Theme/Scripts
 ./install.sh
