@@ -1,112 +1,131 @@
 #!/bin/bash
 
-## Define functions
+# define functions
 
-Wall_Prev() {
-    for ((i = 0; i < ${#Wallist[@]}; i++)); do
-        if [ "${Wallist[i]}" = "${getWall2}" ]; then
-            ws="${Wallist[i - 1]/$HOME/~}"
-            sed -i "s+${getWall1}+${ws}+" "$BaseDir/wall.ctl"
-            ln -fs "${Wallist[i - 1]}" "$BaseDir/wall.set"
+Wall_Update()
+{
+    local x_wall=$1
+    local x_update=${x_wall/$HOME/"~"}
+    sed -i "/^1|/c\1|${curTheme}|${x_update}" $ctlFile
+    ln -fs $x_wall $wallSet
+
+    cacheImg=`echo $x_wall | awk -F '/' '{print $NF}'`
+
+    if [ ! -d ${cacheDir}/${curTheme} ] ; then
+        mkdir -p ${cacheDir}/${curTheme}
+    fi
+
+    if [ ! -f "${cacheDir}/${curTheme}/${cacheImg}" ] ; then
+        convert $wallSet -thumbnail 500x500^ -gravity center -extent 500x500 ${cacheDir}/${curTheme}/${cacheImg}
+    fi
+}
+
+Wall_Change()
+{
+    local x_switch=$1
+
+    for (( i=0 ; i<${#Wallist[@]} ; i++ ))
+    do
+        if [ ${Wallist[i]} == ${fullPath} ] ; then
+
+            if [ $x_switch == 'n' ] ; then
+                nextIndex=$(( (i + 1) % ${#Wallist[@]} ))
+            elif [ $x_switch == 'p' ] ; then
+                nextIndex=$(( i - 1 ))
+            fi
+
+            Wall_Update ${Wallist[nextIndex]}
             break
         fi
     done
 }
 
-Wall_Next() {
-    for ((i = 0; i < ${#Wallist[@]}; i++)); do
-        if [ "${Wallist[i]}" = "${getWall2}" ]; then
-            nextIndex=$(( (i + 1) % ${#Wallist[@]} ))
-            ws="${Wallist[nextIndex]/$HOME/~}"
-            sed -i "s+${getWall1}+${ws}+" "$BaseDir/wall.ctl"
-            ln -fs "${Wallist[nextIndex]}" "$BaseDir/wall.set"
-            break
-        fi
-    done
-}
-
-Wall_Set() {
-    if [ -z "$xtrans" ]; then
+Wall_Set()
+{
+    if [ -z $xtrans ] ; then
         xtrans="grow"
     fi
 
-    if [ -z "$xpos" ]; then
-        xpos="center"
-    fi
-
-    swww img "$BaseDir/wall.set" \
+    swww img $wallSet \
     --transition-bezier .43,1.19,1,.4 \
-    --transition-type "$xtrans" \
-    --transition-duration 1 \
+    --transition-type $xtrans \
+    --transition-duration 0.7 \
     --transition-fps 60 \
-    --transition-pos "$xpos"
+    --invert-y \
+    --transition-pos "$( hyprctl cursorpos )"
 }
 
 
-## Set variables
+# set variables
 
-BaseDir=$(dirname "$(realpath "$0")")
+cacheDir="$HOME/.config/swww/.cache"
+ctlFile="$HOME/.config/swww/wall.ctl"
+wallSet="$HOME/.config/swww/wall.set"
+wallBlr="$HOME/.config/swww/wall.blur"
+ctlLine=`grep '^1|' $ctlFile`
 
-if [ "$(grep '^1|' "$BaseDir/wall.ctl" | wc -l)" -ne 1 ]; then
-    echo "ERROR: $BaseDir/wall.ctl Unable to fetch theme..."
+if [  `echo $ctlLine | wc -w` -ne "1" ] ; then
+    echo "ERROR : $ctlFile Unable to fetch theme..."
     exit 1
 fi
 
-getWall1=$(grep '^1|' "$BaseDir/wall.ctl" | cut -d '|' -f 3)
-getWall2=$(eval echo "$getWall1")
+curTheme=`echo $ctlLine | cut -d '|' -f 2`
+fullPath=`echo $ctlLine | cut -d '|' -f 3`
+fullPath=`eval echo $fullPath`
+wallName=`echo $fullPath | awk -F '/' '{print $NF}'`
+wallPath=`echo $fullPath | sed "s/\/$wallName//g"`
 
-if [ ! -f "$getWall2" ]; then
-    echo "ERROR: $getWall2 Wallpaper not found..."
-    exit 1
-fi
-
-if [ ! -f "$BaseDir/wall.set" ]; then
-    echo "ERROR: wallpaper link is broken"
-    exit 1
-fi
-
-Wallist=($(dirname "$getWall2"/*))
-
-
-## Evaluate options
-
-while getopts "np" option; do
-    case $option in
-    n) # set the next wallpaper
-        xtrans="grow"
-        Wall_Next
-        ;;
-    p) # set the previous wallpaper
-        xtrans="outer"
-        Wall_Prev
-        ;;
-    *)
-        # invalid option
-        echo "Usage: $0 [-n] [-p] [1|2|3|4]"
+if [ ! -f  $wallPath/$wallName ] ; then
+    if [ -d $HOME/.config/swww/$curTheme ] ; then
+        wallPath="$HOME/.config/swww/$curTheme"
+        fullPath=`ls $wallPath/* | head -1`
+        Wall_Update $fullPath
+    else
+        echo "ERROR: wallpaper $wallPath/$wallName not found..."
         exit 1
-        ;;
+    fi
+fi
+
+Wallist=(`ls $wallPath/*`)
+
+
+# evaluate options
+
+while getopts "nps" option ; do
+    case $option in
+    n ) # set next wallpaper
+        xtrans="grow"
+        Wall_Change n ;;
+    p ) # set previous wallpaper
+        xtrans="outer"
+        Wall_Change p ;;
+    s ) # set input wallpaper
+        shift $((OPTIND -1))
+        if [ -f $1 ] ; then
+            Wall_Update $1
+        fi ;;
+    * ) # invalid option
+        echo "n : set next wall"
+        echo "p : set previous wall"
+        echo "s : set input wallpaper"
+        exit 1 ;;
     esac
 done
 
-shift $((OPTIND -1))
-case $1 in
-    1) xpos="top-left" ;;
-    2) xpos="top-right" ;;
-    3) xpos="bottom-right" ;;
-    4) xpos="bottom-left" ;;
-esac
 
-
-## Check swww daemon
+# check swww daemon
 
 swww query
-if [ $? -eq 1 ]; then
+if [ $? -eq 1 ] ; then
     swww init
 fi
 
 
-## Set wallpaper
+# set wall
 
 Wall_Set
-convert -scale 10% -blur 0x2 -resize 100% "$BaseDir/wall.set" "$BaseDir/wall.blur"
+
+if [ $? -eq 0 ] ; then
+    convert -scale 10% -blur 0x2 -resize 100% $wallSet $wallBlr
+fi
 
