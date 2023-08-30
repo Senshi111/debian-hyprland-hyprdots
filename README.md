@@ -67,9 +67,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
     - [x] Material-Sakura
     - [x] Graphite-Mono
     - [x] Cyberpunk-Edge
-    - [ ] Frosted-Glass (maybe later)
     - [ ] Gruvbox-Retro (maybe later)
     - [ ] Nordic-Blue (maybe later)
+
+- Contributors themes
+    - [x] Frosted-Glass by T-Crypt
 
 | Catppuccin-Mocha |
 | :-: |
@@ -111,18 +113,40 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_cedge_1.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_cedge_2.png) |
 
+| Frosted-Glass |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_2.png) |
 
-### Rofi
-| launchers |
+
+### Styles
+
+| Theme Select |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_select.png) |
+
+| Wallpaper Select |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/walls_select.png) |
+
+| Launcher Style Select |
 | :-: |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_sel.png) |
+
+| Launcher Styles |
+| :-: |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_1.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_2.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_3.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_4.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_5.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_6.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_7.png) |
 
+| Wlogout Menu |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/wlog_style_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/wlog_style_2.png) |
 
 <details>
 <summary><h4>Packages</h4></summary>
