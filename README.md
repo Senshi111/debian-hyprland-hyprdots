@@ -1,5 +1,4 @@
-# NOTE : This Guide contains 2 Parts
-
+# Install Hyprland on any Debian or Ubuntu based distro with Ricing
 # All the thems i took from prasanthrangan
 > **Note**
 >
