@@ -24,7 +24,7 @@ sudo nano /etc/apt/sources.list
 STEP 2 :
 > Install run dependencies and make dependencies from official repo
 >> FYI : I used nala instead of apt
->>> Some dependencies will be needed to be built from source (see Step _)
+>>> Some dependencies will be needed to be built from source (see Step 4)
 ```
 sudo apt-get install waybar golang-go check libgtk-3-dev libsystemd0 libsystemd-dev libegl1-mesa libegl1-mesa-dev libgbm1 libgbm-dev libgles2-mesa-dev meson wget build-essential ninja-build cmake-extras cmake gettext gettext-base fontconfig libfontconfig-dev libffi-dev libxml2-dev libdrm-dev libxkbcommon-x11-dev libxkbregistry-dev libxkbcommon-dev libpixman-1-dev libudev-dev libseat-dev seatd libxcb-dri3-dev libvulkan-dev libvulkan-volk-dev  vulkan-validationlayers-dev libvkfft-dev libgulkan-dev libegl-dev libgles2 libegl1-mesa-dev glslang-tools libinput-bin libinput-dev libxcb-composite0-dev libavutil-dev libavcodec-dev libavformat-dev libxcb-ewmh2 libxcb-ewmh-dev libxcb-present-dev libxcb-icccm4-dev libxcb-render-util0-dev libxcb-res0-dev libxcb-xinput-dev libpango1.0-dev xdg-desktop-portal-wlr hwdata git libdrm-dev gdb xwayland libliftoff-dev libdisplay-info-dev libpipewire-0.3-dev libinih-dev libgmp-dev scdoc libpam0g libpam0g-dev valgrind libgtk-4-1 libgtk-4-dev edid-decode 
 ```
@@ -33,6 +33,8 @@ STEP 3 : Install Rust
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+```
 rustup default 1.7.0
 ```
 
@@ -42,6 +44,8 @@ rustup default 1.7.0
 > Also if you have nvidia gpu, go to Hyprland nvidia page and aplay sugestions For more details, please refer [Hyprland Nvidia](https://wiki.hyprland.org/Nvidia/) 
    
 STEP 4 : Build some dependencies from source
+
+> Why? Why is this not added to script, I want you to do this manually because the compilor may show error while building, all errors are highlighted by the color red in your terminal, If you see any error regarding a certain build dependency, then google it or ask some AI bot which package should you install via apt to fulfill that dependency
 
 STEP 4.1 : libdisplay-info
 ```
@@ -53,8 +57,10 @@ cd    build &&
 
 meson setup --prefix=/usr --buildtype=release &&
 ninja
-
-sudo ninja install
+```
+```
+sudo ninja install &&
+cd ..
 ```
 
 STEP 4.2 : libliftoff
@@ -68,9 +74,12 @@ meson setup ..            \
       --buildtype=release \
 ```
 ```
-cd build
+cd build &&
 ninja
-sudo ninja install
+```
+```
+sudo ninja install &&
+cd ..
 ```
 STEP 4.3 : wayland-protocols
 
@@ -85,10 +94,12 @@ cd wayland-protocols-1.32
 
 mkdir build &&
 cd    build &&
-
+```
+```
 meson setup --prefix=/usr --buildtype=release &&
 ninja
-
+```
+```
 sudo ninja install
 ```
 STEP 4.4 : wayland
@@ -96,31 +107,100 @@ STEP 4.4 : wayland
 ```
 wget https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.22.0/downloads/wayland-1.22.0.tar.xz
 ```
-```
-wget https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.22.0/downloads/wayland-1.22.0.tar.xz
-```
+
 ```
 cd wayland-1.22.0
 mkdir build &&
 cd    build &&
-
+```
+```
 meson setup ..            \
       --prefix=/usr       \
       --buildtype=release \
       -Ddocumentation=false &&
 ninja
-sudo ninja install
-
+```
+```
+sudo ninja install &&
 cd ../..
 ```
+STEP 4.5 : libinput
 
-After minimal (or any other) Debian install (with grub), clone and execute -
+```
+git clone https://gitlab.freedesktop.org/libinput/libinput
+```
+```
+cd libinput
+```
+```
+git clone https://gitlab.freedesktop.org/libinput/libinput
+```
+```
+cd libinput
+```
+```
+meson --prefix=/usr builddir/
+```
+```
+ninja -C builddir/
+```
+```
+sudo ninja -C builddir/ install
+```
+```
+sudo systemd-hwdb update
+```
+
+STEP 5 : YAY ! Manual Installations completed, now you can run script :
+clone and execute -
+
+STEP 5A : Build Hyprland and utilities
+
 ```shell
 sudo apt install git
 git clone https://github.com/Senshi111/debian-hyprland-hyprdots.git
 cd ~/debian-hyprland-hyprdots/build-hyprland-and-apps
 ./install-all.sh
+```
+> Now lets verify if everything has installed :
+```shell
+which Hyprland && which  swww &&  which  swappy && which  wl-copy && which  swaylock && which  nwg-look
+```
+>> Verify all above packages have a path
+>>> I was not able to build swww and xdg-desktop-portal-hyprland through installation script; so I installed it via nix-env
+* What is nix-env ? -> https://www.youtube.com/watch?v=BwEIXIjLTNs
 
+```
+nix-env -iA nixpkgs.swww
+```
+```
+nix-env -iA nixpkgs.xdg-desktop-portal-hyprland
+```
+
+> nix-env installation for other packages (if install_all.sh script could not install)
+```
+nix-env -iA nixpkgs.swappy
+```
+```
+nix-env -iA nixpkgs.wl-clipboard
+```
+```
+nix-env -iA nixpkgs.swaylock
+nix-env -iA nixpkgs.swaylock-effects
+```
+> Why not install even Hyprland via nix-env?
+> > Answer : does not work
+
+STEP 5B : Get Themes
+
+```
+cd ~/debian-hyprland-hyprdots/Theme/Configs/
+```
+```
+rsync -avxHAXP --exclude '.git*' .* ~/
+```
+
+```shell
 cd ~/debian-hyprland-hyprdots/Theme/Scripts
 ./install.sh
 
