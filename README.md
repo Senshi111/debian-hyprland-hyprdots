@@ -1,37 +1,118 @@
+# NOTE : This Guide contains 2 Parts
+
 # All the thems i took from prasanthrangan
 > **Note**
 >
 > thanks to prasanthrangan's work, I only took his themes and modified the scripts so that they could work in debian
->[prasanthrangan github page](https://github.com/prasanthrangan/hyprdots) 
+>[prasanthrangan github page](https://github.com/prasanthrangan/hyprdots)
 
+# Distro Compatibility
 
+* Tested on Ubuntu (gnome) Lunar Lobster
+* Tested on Ubuntu cinnamon Lunar Lobster
+* you tell me ...
 
+## Part 1 : Installing Hyprland and utilities (bar, wallpaper changer, etc.)
 
-# --// Hyprdots //--
+STEP 1 : Edit the apt sorces list
 
+```
+sudo nano /etc/apt/sources.list
+```
+> Uncomment all lines starting with deb-src (if none, skip)
 
-<p align="center">
-  <img width="250" src="https://github-production-user-asset-6210df.s3.amazonaws.com/40372242/263763138-8254e6be-9537-4388-90f8-c418124c8284.png">
-</p>
-    
+STEP 2 :
+> Install run dependencies and make dependencies from official repo
+>> FYI : I used nala instead of apt
+>>> Some dependencies will be needed to be built from source (see Step _)
+```
+sudo apt-get install waybar golang-go check libgtk-3-dev libsystemd0 libsystemd-dev libegl1-mesa libegl1-mesa-dev libgbm1 libgbm-dev libgles2-mesa-dev meson wget build-essential ninja-build cmake-extras cmake gettext gettext-base fontconfig libfontconfig-dev libffi-dev libxml2-dev libdrm-dev libxkbcommon-x11-dev libxkbregistry-dev libxkbcommon-dev libpixman-1-dev libudev-dev libseat-dev seatd libxcb-dri3-dev libvulkan-dev libvulkan-volk-dev  vulkan-validationlayers-dev libvkfft-dev libgulkan-dev libegl-dev libgles2 libegl1-mesa-dev glslang-tools libinput-bin libinput-dev libxcb-composite0-dev libavutil-dev libavcodec-dev libavformat-dev libxcb-ewmh2 libxcb-ewmh-dev libxcb-present-dev libxcb-icccm4-dev libxcb-render-util0-dev libxcb-res0-dev libxcb-xinput-dev libpango1.0-dev xdg-desktop-portal-wlr hwdata git libdrm-dev gdb xwayland libliftoff-dev libdisplay-info-dev libpipewire-0.3-dev libinih-dev libgmp-dev scdoc libpam0g libpam0g-dev valgrind libgtk-4-1 libgtk-4-dev edid-decode 
+```
 
+STEP 3 : Install Rust
 
-## My Debian Sid Hyprland Config
-https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23-9aa2-b1edb6cabe99.mp4
-
-| <!-- --> | <!-- --> |
-| --- | --- |
-| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/showcase_1.png) | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/showcase_2.png) |
-| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/showcase_3.png) | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/showcase_4.png) |
-
-
-### Installation
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default 1.7.0
+```
 
 > **Warning**
 >
 > When you installing rustup, select nightly version othervise you wont be able to build pacakge
 > Also if you have nvidia gpu, go to Hyprland nvidia page and aplay sugestions For more details, please refer [Hyprland Nvidia](https://wiki.hyprland.org/Nvidia/) 
    
+STEP 4 : Build some dependencies from source
+
+STEP 4.1 : libdisplay-info
+```
+git clone https://gitlab.freedesktop.org/emersion/libdisplay-info.git
+```
+```
+mkdir build &&
+cd    build &&
+
+meson setup --prefix=/usr --buildtype=release &&
+ninja
+
+sudo ninja install
+```
+
+STEP 4.2 : libliftoff
+
+```
+git clone https://salsa.debian.org/debian/libliftoff.git
+```
+```
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+```
+```
+cd build
+ninja
+sudo ninja install
+```
+STEP 4.3 : wayland-protocols
+
+```
+wget https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.32/downloads/wayland-protocols-1.32.tar.xz
+```
+```
+tar -xvJf wayland-protocols-1.32.tar.xz
+```
+```
+cd wayland-protocols-1.32
+
+mkdir build &&
+cd    build &&
+
+meson setup --prefix=/usr --buildtype=release &&
+ninja
+
+sudo ninja install
+```
+STEP 4.4 : wayland
+
+```
+wget https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.22.0/downloads/wayland-1.22.0.tar.xz
+```
+```
+wget https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.22.0/downloads/wayland-1.22.0.tar.xz
+```
+```
+cd wayland-1.22.0
+mkdir build &&
+cd    build &&
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -Ddocumentation=false &&
+ninja
+sudo ninja install
+
+cd ../..
+```
 
 After minimal (or any other) Debian install (with grub), clone and execute -
 ```shell
