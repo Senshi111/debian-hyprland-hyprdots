@@ -92,8 +92,9 @@ install_packages \
         libpam0g-dev \
         golang \
         waybar \
-	curl
-
+        	curl \
+        psmisc
+  
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
 export PATH=$PATH:/usr/local/go/bin
