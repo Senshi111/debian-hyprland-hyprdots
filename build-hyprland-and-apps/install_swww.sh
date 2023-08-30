@@ -3,7 +3,7 @@
 # Clone and build swww
 git clone https://github.com/Horus645/swww.git
 cd swww
-
+source "$HOME/.cargo/env"
 # Build swww
 cargo build --release
 
@@ -12,6 +12,7 @@ sudo cp target/release/swww /usr/bin/
 sudo cp target/release/swww-daemon /usr/bin/
 
 # Copy bash completions
+sudo mkdir -p /usr/share/bash-completion/completions
 sudo cp completions/swww.bash /usr/share/bash-completion/completions/swww
 
 # Uncomment this section if needed
