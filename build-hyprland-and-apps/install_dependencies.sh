@@ -92,8 +92,9 @@ install_packages \
         libpam0g-dev \
         golang \
         waybar \
-        	curl \
-        psmisc
+  	curl \
+        psmisc \
+	swaylock
   
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
