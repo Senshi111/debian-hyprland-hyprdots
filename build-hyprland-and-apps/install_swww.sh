@@ -21,6 +21,7 @@ sudo cp completions/swww.bash /usr/share/bash-completion/completions/swww
 #sudo cp completions/swww.fish /usr/share/fish/vendor_completions.d/swww.fish
 
 # Copy zsh completions
+sudo mkdir -p /usr/share/zsh/site-functions
 sudo cp completions/_swww /usr/share/zsh/site-functions/_swww
 
 # Return to the previous directory
