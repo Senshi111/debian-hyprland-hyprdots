@@ -8,10 +8,9 @@ fi
 # Check for updates
 sudo apt update > /dev/null
 official_updates=$(apt list --upgradable 2>/dev/null | grep -c upgradable)
-aur_updates=0  # AUR doesn't exist on Debian, so we assume 0 AUR updates
 
 # Calculate total available updates
-total_updates=$(( official_updates + aur_updates ))
+total_updates=$(( official_updates ))
 echo "$total_updates"
 
 # Show tooltip
