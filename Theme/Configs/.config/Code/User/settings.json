@@ -1,14 +1,14 @@
 {
     "workbench.colorTheme": "Catppuccin-Mocha",
     "window.menuBarVisibility": "toggle",
-    "editor.fontSize": 12,
+    "editor.fontSize": 14,
     "editor.scrollbar.vertical": "hidden",
     "editor.scrollbar.verticalScrollbarSize": 0,
     "security.workspace.trust.untrustedFiles": "newWindow",
     "security.workspace.trust.startupPrompt": "never",
     "security.workspace.trust.enabled": false,
-    "workbench.sideBar.location": "right",
-    "editor.minimap.side": "left",
+    "workbench.sideBar.location": "left",
+    "editor.minimap.side": "right",
     "editor.fontFamily": "'Maple Mono', 'monospace', monospace",
     "editor.minimap.scale": 2,
     "extensions.autoUpdate": false
