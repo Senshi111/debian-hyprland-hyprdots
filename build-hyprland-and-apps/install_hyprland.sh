@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Function to add a value to a configuration file if not present
-add_to_config() {
+add_to_modules() {
     local config_file="$1"
     local value="$2"
     
@@ -13,6 +13,21 @@ add_to_config() {
     fi
 }
 
+add_to_grub() {
+    local value="$1"
+    
+    # Check if the value is already present in GRUB_CMDLINE_LINUX_DEFAULT
+    if ! sudo grep -q "GRUB_CMDLINE_LINUX_DEFAULT=.*$value" /etc/default/grub; then
+        echo "Adding $value to GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub"
+        
+        # Use sed to add the value to the GRUB_CMDLINE_LINUX_DEFAULT line
+        sudo sed -i "s/\(GRUB_CMDLINE_LINUX_DEFAULT=\"[^\"]*\)\"/\1 $value\"/" /etc/default/grub
+        sudo update-grub
+    else
+        echo "$value is already present in GRUB_CMDLINE_LINUX_DEFAULT."
+    fi
+}
+
 # Clone and build Hyprland
 git clone --recursive https://github.com/hyprwm/Hyprland
 cd Hyprland || exit
@@ -21,23 +36,16 @@ cd Hyprland || exit
 if lspci -k | grep -A 2 -E "(VGA|3D)" | grep -iq nvidia; then
     sed 's/glFlush();/glFinish();/g' -i subprojects/wlroots/render/gles2/renderer.c
 
-    # Add nvidia_drm.modeset=1 to GRUB_CMDLINE_LINUX_DEFAULT
+    # Add nvidia_drm.modeset=1 to GRUB_CMDLINE_LINUX_DEFAULT if not present
     add_value="nvidia_drm.modeset=1"
-    grub_config="/etc/default/grub"
-    
-    if [ -e "$grub_config" ]; then
-        add_to_config "$grub_config" "$add_value"
-        sudo update-grub
-    else
-        echo "GRUB configuration file ($grub_config) not found."
-    fi
+    add_to_grub "$add_value"
 
     # Add NVIDIA modules to initramfs configuration
     modules_to_add="nvidia nvidia_modeset nvidia_uvm nvidia_drm"
     modules_file="/etc/initramfs-tools/modules"
     
     if [ -e "$modules_file" ]; then
-        add_to_config "$modules_file" "$modules_to_add"
+        add_to_modules "$modules_file" "$modules_to_add"
         sudo update-initramfs -u
     else
         echo "Modules file ($modules_file) not found."
