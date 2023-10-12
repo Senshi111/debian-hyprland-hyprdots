@@ -7,19 +7,17 @@
     min-height: 10px;
 }
 
-@import "themes/${cur_theme}.css";
+@import "themes/theme.css";
 
 window#waybar {
     background: @bar-bg;
 }
 
 tooltip {
-    background: @tool-bg;
-    color: @tool-color;
-    border-radius: ${b_radius}px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: @tool-border;
+    background: @main-bg;
+    color: @main-fg;
+    border-radius: ${t_radius}px;
+    border-width: 0px;
 }
 
 #workspaces button {
@@ -31,14 +29,14 @@ tooltip {
     margin-bottom: ${w_margin}px;
     padding-left: ${w_paddin}px;
     padding-right: ${w_paddin}px;
-    color: @wb-color;
+    color: @main-fg;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
 #workspaces button.active {
     background: @wb-act-bg;
-    color: @wb-act-color;
+    color: @wb-act-fg;
     margin-left: ${w_margin}px;
     padding-left: ${w_padact}px;
     padding-right: ${w_padact}px;
@@ -49,7 +47,7 @@ tooltip {
 
 #workspaces button:hover {
     background: @wb-hvr-bg;
-    color: @wb-hvr-color;
+    color: @wb-hvr-fg;
     padding-left: ${w_paddin}px;
     padding-right: ${w_paddin}px;
     animation: gradient_f 20s ease-in infinite;
@@ -90,31 +88,14 @@ tooltip {
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
-#cpu,
-#memory,
-#battery,
-#clock,
-#workspaces,
-#window,
-#taskbar,
-#network,
-#bluetooth,
-#pulseaudio,
-#mpris,
-#custom-updates,
-#custom-wallchange,
-#custom-mode,
-#custom-cliphist,
-#custom-power,
-#custom-wbar,
+${modules_ls}
 #custom-l_end,
 #custom-r_end,
 #custom-sl_end,
 #custom-sr_end,
 #custom-rl_end,
-#custom-rr_end,
-#tray {
-    color: @main-color;
+#custom-rr_end {
+    color: @main-fg;
     background: @main-bg;
     opacity: 1;
     margin: ${g_margin}px 0px ${g_margin}px 0px;

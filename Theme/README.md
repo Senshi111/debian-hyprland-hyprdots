@@ -44,6 +44,7 @@ Please reboot after the install script completes and takes you to sddm login scr
 For more details, please refer [installation.md](https://github.com/prasanthrangan/hyprdots/blob/main/installation.md)
 
 
+
 ### Theming
 To add your own custom theme, please refer [theming.md](https://github.com/prasanthrangan/hyprdots/blob/main/theming.md)
 - Available themes
@@ -55,9 +56,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
     - [x] Material-Sakura
     - [x] Graphite-Mono
     - [x] Cyberpunk-Edge
-    - [ ] Frosted-Glass (maybe later)
-    - [ ] Gruvbox-Retro (maybe later)
     - [ ] Nordic-Blue (maybe later)
+
+- Contributors themes
+    - [x] Frosted-Glass by T-Crypt
+    - [x] Gruvbox-Retro by T-Crypt
 
 | Catppuccin-Mocha |
 | :-: |
@@ -98,6 +101,16 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
 | :-: |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_cedge_1.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_cedge_2.png) |
+
+| Frosted-Glass |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_2.png) |
+
+| Gruvbox-Retro |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_2.png) |
 
 
 ### Rofi
