@@ -67,11 +67,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
     - [x] Material-Sakura
     - [x] Graphite-Mono
     - [x] Cyberpunk-Edge
-    - [ ] Gruvbox-Retro (maybe later)
     - [ ] Nordic-Blue (maybe later)
 
 - Contributors themes
     - [x] Frosted-Glass by T-Crypt
+    - [x] Gruvbox-Retro by T-Crypt
 
 | Catppuccin-Mocha |
 | :-: |
@@ -117,6 +117,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
 | :-: |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_1.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_2.png) |
+
+| Gruvbox-Retro |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_2.png) |
 
 
 ### Styles
