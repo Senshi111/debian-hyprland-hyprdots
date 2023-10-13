@@ -45,6 +45,19 @@ cd ~/debian-hyprland-hyprdots/Theme/Scripts
 
 ```
 
+> **Warning**
+>
+> If you dont have pyamdgpuinfo installed
+```shell
+sudo apt install python3-pip
+pip install pyamdgpuinfo
+```
+> if you got an  #error: externally-managed-environment
+```shell
+sudo mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.old
+```
+
+
 > **Note**
 >
 > You can also create your own list (for ex. `custom_apps.lst`) with all your favorite apps and pass the file as a parameter to install it -
