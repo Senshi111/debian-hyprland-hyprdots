@@ -38,12 +38,25 @@ After minimal (or any other) Debian install (with grub), clone and execute -
 sudo apt install git
 git clone https://github.com/Senshi111/debian-hyprland-hyprdots.git
 cd ~/debian-hyprland-hyprdots/build-hyprland-and-apps
-./install-all.sh
+./install_all.sh
 
 cd ~/debian-hyprland-hyprdots/Theme/Scripts
 ./install.sh
 
 ```
+
+> **Warning**
+>
+> If you dont have pyamdgpuinfo installed
+```shell
+sudo apt install python3-pip
+pip install pyamdgpuinfo
+```
+> if you got an  #error: externally-managed-environment
+```shell
+sudo mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.old
+```
+
 
 > **Note**
 >
@@ -67,11 +80,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
     - [x] Material-Sakura
     - [x] Graphite-Mono
     - [x] Cyberpunk-Edge
-    - [ ] Gruvbox-Retro (maybe later)
     - [ ] Nordic-Blue (maybe later)
 
 - Contributors themes
     - [x] Frosted-Glass by T-Crypt
+    - [x] Gruvbox-Retro by T-Crypt
 
 | Catppuccin-Mocha |
 | :-: |
@@ -117,6 +130,11 @@ To add your own custom theme, please refer [theming.md](https://github.com/prasa
 | :-: |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_1.png) |
 | ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_frosted_2.png) |
+
+| Gruvbox-Retro |
+| :-: |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_1.png) |
+| ![](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_gruvbox_2.png) |
 
 
 ### Styles

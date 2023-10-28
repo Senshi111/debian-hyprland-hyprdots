@@ -1,46 +1,51 @@
 #!/bin/bash
 
 # set variables
-BaseDir=$(dirname "$(realpath "$0")")
-ConfDir="$HOME/.config"
-ThemeCtl="$ConfDir/swww/wall.ctl"
+ScrDir=`dirname $(realpath $0)`
+source ${ScrDir}/globalcontrol.sh
+
 
 # evaluate options
-while getopts "npst:" option ; do
+while getopts "npst" option ; do
     case $option in
+
     n ) # set next theme
-        ThemeSet=$(head -1 "$ThemeCtl" | cut -d '|' -f 2) #default value
+        ThemeSet=`head -1 $ThemeCtl | cut -d '|' -f 2` #default value
         flg=0
-        while read -r line
+        while read line
         do
-            if [ "$flg" -eq 1 ] ; then
-                ThemeSet=$(echo "$line" | cut -d '|' -f 2)
+            if [ $flg -eq 1 ] ; then
+                ThemeSet=`echo $line | cut -d '|' -f 2`
                 break
-            elif [ "$(echo "$line" | cut -d '|' -f 1)" -eq 1 ] ; then
+            elif [ `echo $line | cut -d '|' -f 1` -eq 1 ] ; then
                 flg=1
             fi
-        done < "$ThemeCtl"
-        export xtrans="center" ;;
+        done < $ThemeCtl
+        export xtrans="grow" ;;
+
     p ) # set previous theme
-        ThemeSet=$(tail -1 "$ThemeCtl" | cut -d '|' -f 2) #default value
+        ThemeSet=`tail -1 $ThemeCtl | cut -d '|' -f 2` #default value
         flg=0
-        while read -r line
+        while read line
         do
-            if [ "$flg" -eq 1 ] ; then
-                ThemeSet=$(echo "$line" | cut -d '|' -f 2)
+            if [ $flg -eq 1 ] ; then
+                ThemeSet=`echo $line | cut -d '|' -f 2`
                 break
-            elif [ "$(echo "$line" | cut -d '|' -f 1)" -eq 1 ] ; then
+            elif [ `echo $line | cut -d '|' -f 1` -eq 1 ] ; then
                 flg=1
             fi
-        done < <( tac "$ThemeCtl" )
+        done < <( tac $ThemeCtl )
         export xtrans="outer" ;;
+
     s ) # set selected theme
         shift $((OPTIND -1))
-        ThemeSet="$1" ;;
+        ThemeSet=$1 ;;
+
     t ) # display tooltip
         echo ""
         echo "󰆊 Next/Previous Theme"
         exit 0 ;;
+
     * ) # invalid option
         echo "n : set next theme"
         echo "p : set previous theme"
@@ -50,63 +55,70 @@ while getopts "npst:" option ; do
     esac
 done
 
+
 # update theme control
-if [ "$(cat "$ThemeCtl" | awk -F '|' -v thm="$ThemeSet" '{if($2==thm) print$2}' | wc -w)" -ne 1 ] ; then
+if [ `cat $ThemeCtl | awk -F '|' -v thm=$ThemeSet '{if($2==thm) print$2}' | wc -w` -ne 1 ] ; then
     echo "Unknown theme selected: $ThemeSet"
     echo "Available themes are:"
-    cat "$ThemeCtl" | cut -d '|' -f 2
+    cat $ThemeCtl | cut -d '|' -f 2
     exit 1
 else
     echo "Selected theme: $ThemeSet"
-    sed -i "s/^1/0/g" "$ThemeCtl"
-    awk -F '|' -v thm="$ThemeSet" '{OFS=FS} {if($2==thm) $1=1; print$0}' "$ThemeCtl" > "$BaseDir/tmp" && mv "$BaseDir/tmp" "$ThemeCtl"
+    sed -i "s/^1/0/g" $ThemeCtl
+    awk -F '|' -v thm=$ThemeSet '{OFS=FS} {if($2==thm) $1=1; print$0}' $ThemeCtl > ${ScrDir}/tmp && mv ${ScrDir}/tmp $ThemeCtl
 fi
 
+
 # swwwallpaper
-getWall=$(grep '^1|' "$ThemeCtl" | cut -d '|' -f 3)
-getWall=$(eval echo "$getWall")
-ln -fs "$getWall" "$ConfDir/swww/wall.set"
-"$ConfDir/hypr/scripts/swwwallpaper.sh"
+getWall=`grep '^1|' $ThemeCtl | cut -d '|' -f 3`
+getWall=`eval echo $getWall`
+getName=`basename $getWall`
+ln -fs $getWall $ConfDir/swww/wall.set
+ln -fs $cacheDir/${ThemeSet}/${getName}.rofi $ConfDir/swww/wall.rofi
+ln -fs $cacheDir/${ThemeSet}/${getName}.blur $ConfDir/swww/wall.blur
+${ScrDir}/swwwallpaper.sh
 
 if [ $? -ne 0 ] ; then
     echo "ERROR: Unable to set wallpaper"
     exit 1
 fi
 
+
 # code
-sed -i "/workbench.colorTheme/c\    \"workbench.colorTheme\": \"$ThemeSet\"," "$ConfDir/Code/User/settings.json"
+sed -i "/workbench.colorTheme/c\    \"workbench.colorTheme\": \"${ThemeSet}\"," $ConfDir/Code/User/settings.json
+
 
 # kitty
-ln -fs "$ConfDir/kitty/themes/${ThemeSet}.conf" "$ConfDir/kitty/themes/theme.conf"
+ln -fs $ConfDir/kitty/themes/${ThemeSet}.conf $ConfDir/kitty/themes/theme.conf
 killall -SIGUSR1 kitty
 
+
 # qt5ct
-sed -i "/^color_scheme_path=/c\color_scheme_path=$ConfDir/qt5ct/colors/${ThemeSet}.conf" "$ConfDir/qt5ct/qt5ct.conf"
-IconSet=$(awk -F "'" '$0 ~ /gsettings set org.gnome.desktop.interface icon-theme/{print $2}' "$ConfDir/hypr/themes/${ThemeSet}.conf")
-sed -i "/^icon_theme=/c\icon_theme=${IconSet}" "$ConfDir/qt5ct/qt5ct.conf"
+sed -i "/^color_scheme_path=/c\color_scheme_path=$ConfDir/qt5ct/colors/${ThemeSet}.conf" $ConfDir/qt5ct/qt5ct.conf
+IconSet=`awk -F "'" '$0 ~ /gsettings set org.gnome.desktop.interface icon-theme/{print $2}' $ConfDir/hypr/themes/${ThemeSet}.conf`
+sed -i "/^icon_theme=/c\icon_theme=${IconSet}" $ConfDir/qt5ct/qt5ct.conf
+
 
 # gtk3
-sed -i "/^gtk-theme-name=/c\gtk-theme-name=${ThemeSet}" "$ConfDir/gtk-3.0/settings.ini"
-sed -i "/^gtk-icon-theme-name=/c\gtk-icon-theme-name=${IconSet}" "$ConfDir/gtk-3.0/settings.ini"
+sed -i "/^gtk-theme-name=/c\gtk-theme-name=${ThemeSet}" $ConfDir/gtk-3.0/settings.ini
+sed -i "/^gtk-icon-theme-name=/c\gtk-icon-theme-name=${IconSet}" $ConfDir/gtk-3.0/settings.ini
+
 
 # flatpak GTK
-flatpak --user override --env=GTK_THEME="$ThemeSet"
-flatpak --user override --env=ICON_THEME="$IconSet"
+flatpak --user override --env=GTK_THEME="${ThemeSet}"
+flatpak --user override --env=ICON_THEME="${IconSet}"
 
-# rofi
-ln -fs "$ConfDir/rofi/themes/${ThemeSet}.rasi" "$ConfDir/rofi/themes/theme.rasi"
 
 # hyprland
-ln -fs "$ConfDir/hypr/themes/${ThemeSet}.conf" "$ConfDir/hypr/themes/theme.conf"
+ln -fs $ConfDir/hypr/themes/${ThemeSet}.conf $ConfDir/hypr/themes/theme.conf
 hyprctl reload
 
-# refresh thumbnails
-#"$BaseDir/themeselect.sh" T &
 
 # send notification
-ncolor="-h string:bgcolor:#343d46 -h string:fgcolor:#c0c5ce -h string:frcolor:#c0c5ce"
-dunstify $ncolor "theme" -a "    $ThemeSet" -i "$HOME/.config/dunst/icons/paint.svg" -r 91190 -t 2200
+source ${ScrDir}/globalcontrol.sh
+dunstify $ncolor "theme" -a " ${ThemeSet}" -i "~/.config/dunst/icons/hyprdots.png" -r 91190 -t 2200
 
-# waybar
-"$ConfDir/waybar/wbarconfgen.sh"
+
+# rofi & waybar
+${ScrDir}/swwwallbash.sh $getWall
 

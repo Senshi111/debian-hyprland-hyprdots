@@ -1,13 +1,13 @@
 #!/bin/bash
 
-
-theme_file="$HOME/.config/hypr/themes/theme.conf"
+ScrDir=`dirname $(realpath $0)`
+source $ScrDir/globalcontrol.sh
 roconf="~/.config/rofi/clipboard.rasi"
 
 
 # set position
 
-x_mon=$( cat /sys/class/drm/*/modes | head -1  )
+x_mon=$( cat /sys/class/drm/*/modes | head -1  ) 
 y_mon=$( echo $x_mon | cut -d 'x' -f 2 )
 x_mon=$( echo $x_mon | cut -d 'x' -f 1 )
 
@@ -42,8 +42,6 @@ fi
 
 # read hypr theme border
 
-hypr_border=`awk -F '=' '{if($1~" rounding ") print $2}' $theme_file | sed 's/ //g'`
-hypr_width=`awk -F '=' '{if($1~" border_size ") print $2}' $theme_file | sed 's/ //g'`
 wind_border=$(( hypr_border * 3/2 ))
 elem_border=`[ $hypr_border -eq 0 ] && echo "5" || echo $hypr_border`
 r_override="window {border: ${hypr_width}px; border-radius: ${wind_border}px;} entry {border-radius: ${elem_border}px;} element {border-radius: ${elem_border}px;}"
@@ -51,7 +49,6 @@ r_override="window {border: ${hypr_width}px; border-radius: ${wind_border}px;} e
 
 # read hypr font size
 
-#fnt_size=`awk '{if($6=="monospace-font-name") print $NF}' $theme_file | sed "s/'//g"`
 fnt_override=`gsettings get org.gnome.desktop.interface monospace-font-name | awk '{gsub(/'\''/,""); print $NF}'`
 fnt_override="configuration {font: \"JetBrainsMono Nerd Font ${fnt_override}\";}"
 
@@ -60,7 +57,7 @@ fnt_override="configuration {font: \"JetBrainsMono Nerd Font ${fnt_override}\";}
 
 case $1 in
     c)  cliphist list | rofi -dmenu -theme-str "entry { placeholder: \"Copy...\";} ${pos} ${r_override}" -theme-str "${fnt_override}" -config $roconf | cliphist decode | wl-copy
-        ;;
+        ;; 
     d)  cliphist list | rofi -dmenu -theme-str "entry { placeholder: \"Delete...\";} ${pos} ${r_override}" -theme-str "${fnt_override}" -config $roconf | cliphist delete
         ;;
     w)  if [ `echo -e "Yes\nNo" | rofi -dmenu -theme-str "entry { placeholder: \"Clear Clipboard History?\";} ${pos} ${r_override}" -theme-str "${fnt_override}" -config $roconf` == "Yes" ] ; then
@@ -74,3 +71,4 @@ case $1 in
         exit 1
         ;;
 esac
+

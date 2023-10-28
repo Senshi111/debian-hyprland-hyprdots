@@ -1,0 +1,8 @@
+* {
+    main-bg:            E6;
+    main-fg:            ;
+    main-br:            ;
+    main-ex:            ;
+    select-bg:          ;
+    select-fg:          ;
+}
