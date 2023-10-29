@@ -68,6 +68,18 @@ cat << "EOF"
 
 EOF
 
+
+# Check if Debian version is "sid" or "unstable"
+if grep -q "sid\|unstable" /etc/apt/sources.list; then
+    echo "Debian version is sid or unstable"
+    echo "Installing Firefox..."
+    echo -e "firefox" >> install_pkg.lst
+else
+    echo "Debian version is not sid or unstable"
+    echo "Installing Firefox ESR..."
+    echo -e "firefox-esr" >> install_pkg.lst
+fi
+
     #----------------------#
     # prepare package list #
     #----------------------#
