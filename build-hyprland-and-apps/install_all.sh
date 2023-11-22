@@ -13,4 +13,6 @@
 ./install_swaylock-effects.sh
 ./install_nwg-look.sh
 ./install_pokemon-colorscripts.sh
+./install_apps.sh
+./install_themes.sh
 ./cleanup.sh
