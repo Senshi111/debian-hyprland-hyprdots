@@ -54,13 +54,6 @@ sudo mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MA
 ```
 
 
-> **Note**
->
-> You can also create your own list (for ex. `custom_apps.lst`) with all your favorite apps and pass the file as a parameter to install it -
->```shell
->./install.sh custom_apps.lst
->```
-
 Please reboot after the install script completes and takes you to sddm login screen (or black screen) for the first time.   
 For more details, please refer [installation.md](https://github.com/prasanthrangan/hyprdots/blob/main/installation.md)
 
