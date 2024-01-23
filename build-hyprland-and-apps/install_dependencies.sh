@@ -94,7 +94,8 @@ install_packages \
     waybar \
     curl \
     psmisc \
-    swaylock
+    swaylock \
+    imagemagick
   
 # Install dependencies for wlroots
 sudo apt-get build-dep wlroots
