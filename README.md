@@ -3,7 +3,6 @@
 >
 > thanks to prasanthrangan's work, I only took his themes and modified the scripts so that they could work in debian
 >[prasanthrangan github page](https://github.com/prasanthrangan/hyprdots) 
->for fedora version you can go to my other github [here](https://github.com/Senshi111/fedora-hyprland-hyprdots) 
 
 
 
@@ -16,6 +15,8 @@
 </p>
     
 ### location of dots file is [here](https://github.com/Senshi111/hyprland-hyprdots-files.git) 
+
+### for fedora version you can go to my other github [here](https://github.com/Senshi111/fedora-hyprland-hyprdots) 
 
 ## My Debian Sid Hyprland Config
 https://user-images.githubusercontent.com/106020512/235429801-e8b8dae2-c1ad-4e23-9aa2-b1edb6cabe99.mp4
