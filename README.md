@@ -3,6 +3,7 @@
 >
 > thanks to prasanthrangan's work, I only took his themes and modified the scripts so that they could work in debian
 >[prasanthrangan github page](https://github.com/prasanthrangan/hyprdots) 
+>for fedora version you can go to my other github [here](https://github.com/Senshi111/fedora-hyprland-hyprdots) 
 
 
 
