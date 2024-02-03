@@ -57,11 +57,10 @@ sudo mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MA
 
 
 Please reboot after the install script completes and takes you to sddm login screen (or black screen) for the first time.   
-For more details, please refer [installation.md](https://github.com/prasanthrangan/hyprdots/blob/main/installation.md)
-
+For more details, please refer [installation.md](https://github.com/Senshi111/debian-hyprland-hyprdots/blob/main/installation.md)
 
 ### Theming
-To add your own custom theme, please refer [theming.md](https://github.com/prasanthrangan/hyprdots/blob/main/theming.md)
+To add your own custom theme, please refer [theming.md](https://github.com/Senshi111/debian-hyprland-hyprdots/blob/main/theming.md)
 - Available themes
     - [x] Catppuccin-Mocha
     - [x] Catppuccin-Latte
