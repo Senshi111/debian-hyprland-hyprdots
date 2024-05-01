@@ -46,3 +46,4 @@ install_packages \
     libpipewire-0.3-dev \
     libinih-dev \
     ffmpegthumbs \
+    fastfetch
